@@ -26,8 +26,8 @@ class ICDARSegmentation(Dataset):
         """
         super().__init__()
         self._base_dir = base_dir
-        self._image_dir = os.path.join(self._base_dir, 'Train_Images')
-        self._cat_dir = os.path.join(self._base_dir, 'Train_GT_bin')
+        self._image_dir = os.path.join(self._base_dir, 'Images')
+        self._cat_dir = os.path.join(self._base_dir, 'GT_bin')
         # self._image_dir = os.path.join(self._base_dir, 'ch4_train_img_jpg')
         # self._cat_dir = os.path.join(self._base_dir, 'ch4_train_gt_png')
 
