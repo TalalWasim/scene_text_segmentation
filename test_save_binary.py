@@ -89,10 +89,10 @@ if __name__=='__main__':
 
     #### Parameters and paths:
     nclass = 2
-    save_res = "/path/to/saveRes"
-    model_path = "/path/to//deeplab-resnet/model_best.pth.tar"
+    save_res = "../results/ICDAR/"
+    model_path = "./pretrained/model_best.pth.tar"
     alphabet="#abcdefghijklmnopqrstuvwxyz1234567890@" 
-    img_path = "/path/to/input_img/"
+    img_path = "../tests/ICDAR/"
 
     ### args
     parser = argparse.ArgumentParser(description="PyTorch DeeplabV3Plus Heatmap Prediction")
@@ -130,9 +130,11 @@ if __name__=='__main__':
         else:
             args.sync_bn = False
                         
-    image_files = sorted(glob.glob(img_path+'*.png')) #'*.png')) #'*.jpg'))
+    image_files = sorted(glob.glob(img_path+'*.jpg')) #'*.png')) #'*.jpg'))
 
     trained_model = get_model(nclass,args)
+    
+    print('Number of images =',len(image_files))
 
     #for img_path in sys.argv[1:]:
     #for i in range(0,11):
@@ -141,7 +143,7 @@ if __name__=='__main__':
         img_path = image_files[i]
         print("image path is: {}".format(img_path))
 
-        img_name = img_path.split('/')[-1].split('.')[0]
+        img_name = img_path.split('\\')[-1].split('.')[0]
         #trained_model = get_model(nclass,args)
         #pdb.set_trace()
         
@@ -167,7 +169,8 @@ if __name__=='__main__':
         
         #ret,img_bin = cv2.threshold(pred.squeeze()[1,:,:],0.2,255,cv2.THRESH_BINARY)
         img_bin = np.argmax(pred.squeeze(), axis=0)
-        cv2.imwrite(save_res+img_name+".png",img_bin)
+        name = save_res+img_name+".png"
+        cv2.imwrite(name,img_bin)
 
         #plt.imshow(pred.squeeze()[i,:,:], cmap='seismic')
         #plt.imshow(pred.squeeze()[i,:,:], vmin=0, vmax=1)
