@@ -9,7 +9,7 @@ class Saver(object):
     def __init__(self, args):
         self.args = args
         #self.directory = os.path.join('run', args.dataset, args.checkname)
-        self.directory = os.path.join('/path/to/deepLabV3Plus/deeplabv3plus_pixelWise/results/'+args.dataset+'_models/run', args.dataset, args.checkname)
+        self.directory = os.path.join('./results/'+args.dataset+'_models', args.checkname)
         self.runs = sorted(glob.glob(os.path.join(self.directory, 'experiment_*')))
         run_id = int(self.runs[-1].split('_')[-1]) + 1 if self.runs else 0
 
