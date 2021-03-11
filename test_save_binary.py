@@ -94,6 +94,11 @@ if __name__=='__main__':
     alphabet="#abcdefghijklmnopqrstuvwxyz1234567890@" 
     img_path = "../tests/ICDAR/"
 
+    sub_folder = model_path.split('/')[-1].split('.')[0]
+    save_res = os.path.join(save_res, sub_folder)
+
+    os.makedirs(save_res, exist_ok=True)
+
     ### args
     parser = argparse.ArgumentParser(description="PyTorch DeeplabV3Plus Heatmap Prediction")
     parser.add_argument('--backbone', type=str, default='resnet',
