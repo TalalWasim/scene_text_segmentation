@@ -174,8 +174,8 @@ if __name__=='__main__':
         
         #ret,img_bin = cv2.threshold(pred.squeeze()[1,:,:],0.2,255,cv2.THRESH_BINARY)
         img_bin = np.argmax(pred.squeeze(), axis=0)
-        name = save_res+img_name+".png"
-        cv2.imwrite(name,img_bin)
+        name = img_name+".png"
+        cv2.imwrite(os.path.join(save_res,name),img_bin)
 
         #plt.imshow(pred.squeeze()[i,:,:], cmap='seismic')
         #plt.imshow(pred.squeeze()[i,:,:], vmin=0, vmax=1)
