@@ -89,10 +89,10 @@ if __name__=='__main__':
 
     #### Parameters and paths:
     nclass = 2
-    save_res = "../results/ICDAR/"
-    model_path = "./pretrained/model_best.pth.tar"
+    save_res = "./predictions/ICDAR_18/"
+    model_path = "./pretrained/model_best_epochs-100_LR-0001_WD-0001.pth.tar"
     alphabet="#abcdefghijklmnopqrstuvwxyz1234567890@" 
-    img_path = "../tests/ICDAR/"
+    img_path = "./tests/ICDAR_18/"
 
     sub_folder = model_path.split('/')[-1].split('.')[0]
     save_res = os.path.join(save_res, sub_folder)
