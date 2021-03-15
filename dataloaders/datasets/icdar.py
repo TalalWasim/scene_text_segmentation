@@ -26,8 +26,8 @@ class ICDARSegmentation(Dataset):
         """
         super().__init__()
         self._base_dir = base_dir
-        self._image_dir = os.path.join(self._base_dir, 'Images')
-        self._cat_dir = os.path.join(self._base_dir, 'GT_bin')
+        self._image_dir = os.path.join(self._base_dir, 'img')
+        self._cat_dir = os.path.join(self._base_dir, 'gt_bin')
         # self._image_dir = os.path.join(self._base_dir, 'ch4_train_img_jpg')
         # self._cat_dir = os.path.join(self._base_dir, 'ch4_train_gt_png')
 
@@ -53,7 +53,7 @@ class ICDARSegmentation(Dataset):
             for ii, line in enumerate(lines):
                 _image = os.path.join(self._image_dir, line + ".jpg") #".png")
                 #print("img is: {}".format(_image))
-                _cat = os.path.join(self._cat_dir, line + "_GT.png")
+                _cat = os.path.join(self._cat_dir, line + "_gt.png")
                 #print("gt is: {}".format(_cat))
                 assert os.path.isfile(_image)
                 assert os.path.isfile(_cat)
@@ -83,7 +83,7 @@ class ICDARSegmentation(Dataset):
 
     def _make_img_gt_point_pair(self, index):
         _img = Image.open(self.images[index]).convert('RGB')
-        _img = _img.resize((640,480), Image.ANTIALIAS)  #*** NOT already resized images *****
+        #_img = _img.resize((640,480), Image.ANTIALIAS)  #*** NOT already resized images *****
         #_img = _img.resize((512,512), Image.ANTIALIAS)
         #width_img, height_img = _img.size
         #print("img width is: {}, img height is: {}".format(height_img,width_img))
@@ -91,7 +91,7 @@ class ICDARSegmentation(Dataset):
         _target= asarray(Image.open(self.categories[index]))
         _target = _target/255
         _target = Image.fromarray(_target)
-        _target = _target.resize((640,480), Image.ANTIALIAS) #*** NOT already resized images *****
+        #_target = _target.resize((640,480), Image.ANTIALIAS) #*** NOT already resized images *****
         #_target = _target.resize((512,512), Image.ANTIALIAS)
         #_target = _target/255
         #width_gt, height_gt = _target.size
