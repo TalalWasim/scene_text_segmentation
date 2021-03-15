@@ -83,7 +83,7 @@ class ICDARSegmentation(Dataset):
 
     def _make_img_gt_point_pair(self, index):
         _img = Image.open(self.images[index]).convert('RGB')
-        #_img = _img.resize((640,480), Image.ANTIALIAS)  #*** NOT already resized images *****
+        _img = _img.resize((640,480), Image.ANTIALIAS)  #*** NOT already resized images *****
         #_img = _img.resize((512,512), Image.ANTIALIAS)
         #width_img, height_img = _img.size
         #print("img width is: {}, img height is: {}".format(height_img,width_img))
@@ -91,7 +91,7 @@ class ICDARSegmentation(Dataset):
         _target= asarray(Image.open(self.categories[index]))
         _target = _target/255
         _target = Image.fromarray(_target)
-        #_target = _target.resize((640,480), Image.ANTIALIAS) #*** NOT already resized images *****
+        _target = _target.resize((640,480), Image.ANTIALIAS) #*** NOT already resized images *****
         #_target = _target.resize((512,512), Image.ANTIALIAS)
         #_target = _target/255
         #width_gt, height_gt = _target.size
