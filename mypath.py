@@ -6,7 +6,7 @@ class Path(object):
         elif dataset == 'totalText':
             return '/path/to/datasets/TextSegmentation/total_text/'
         elif dataset == 'icdar':
-            return '../ICDAR_binary_labels/'
+            return '../Combined/'
         elif dataset == 'icdar2015':
             return 'data/'            
         if dataset == 'pascal':
