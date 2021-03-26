@@ -10,8 +10,8 @@ from numpy import *
 import albumentations as A
 import cv2
 
-resize_width = 2560
-resize_height = 1440
+resize_width = 640
+resize_height = 480
 
 aug_transform = A.Compose([
     A.RandomScale(scale_limit = [-0.95,0], p = 0.95),
