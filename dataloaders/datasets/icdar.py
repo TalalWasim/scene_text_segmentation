@@ -8,6 +8,7 @@ from torchvision import transforms
 from dataloaders import custom_transforms as tr
 from numpy import *
 import albumentations as A
+import cv2
 
 resize_width = 2560
 resize_height = 1440
