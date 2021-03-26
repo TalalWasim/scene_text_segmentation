@@ -7,6 +7,17 @@ from mypath import Path
 from torchvision import transforms
 from dataloaders import custom_transforms as tr
 from numpy import *
+import albumentations as A
+
+resize_width = 2560
+resize_height = 1440
+
+aug_transform = A.Compose([
+    A.RandomScale(scale_limit = [-0.95,0], p = 0.95),
+    A.RandomShadow(shadow_roi=(0.25, 0.25, 0.75, 0.75)),
+    A.PadIfNeeded(min_width = resize_width, min_height = resize_height,
+                  border_mode = cv2.BORDER_CONSTANT)
+    ])
 
 class ICDARSegmentation(Dataset):
     """
@@ -72,7 +83,13 @@ class ICDARSegmentation(Dataset):
 
     def __getitem__(self, index):
         _img, _target = self._make_img_gt_point_pair(index)
-        sample = {'image': _img, 'label': _target}
+
+        _img = np.array(_img)
+        _target = np.array(target)
+
+        transformed = aug_transform(image=_img, mask=_target)
+        
+        sample = {'image': transformed["image"], 'label': transformed["mask"]}
 
         for split in self.split:
             if split == "train":
@@ -83,7 +100,7 @@ class ICDARSegmentation(Dataset):
 
     def _make_img_gt_point_pair(self, index):
         _img = Image.open(self.images[index]).convert('RGB')
-        _img = _img.resize((640,480), Image.ANTIALIAS)  #*** NOT already resized images *****
+        _img = _img.resize((resize_width, resize_height), Image.ANTIALIAS)  #*** NOT already resized images *****
         #_img = _img.resize((512,512), Image.ANTIALIAS)
         #width_img, height_img = _img.size
         #print("img width is: {}, img height is: {}".format(height_img,width_img))
@@ -91,7 +108,7 @@ class ICDARSegmentation(Dataset):
         _target= asarray(Image.open(self.categories[index]))
         _target = _target/255
         _target = Image.fromarray(_target)
-        _target = _target.resize((640,480), Image.ANTIALIAS) #*** NOT already resized images *****
+        _target = _target.resize((resize_width, resize_height), Image.ANTIALIAS) #*** NOT already resized images *****
         #_target = _target.resize((512,512), Image.ANTIALIAS)
         #_target = _target/255
         #width_gt, height_gt = _target.size
