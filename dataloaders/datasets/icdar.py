@@ -86,7 +86,7 @@ class ICDARSegmentation(Dataset):
         _img, _target = self._make_img_gt_point_pair(index)
 
         _img = np.array(_img)
-        _target = np.array(target)
+        _target = np.array(_target)
 
         transformed = aug_transform(image=_img, mask=_target)
         
