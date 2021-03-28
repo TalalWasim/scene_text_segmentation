@@ -10,8 +10,15 @@ from numpy import *
 import albumentations as A
 import cv2
 
-resize_width = 64
-resize_height = 48
+resize_width = 640
+resize_height = 480
+
+aug_transform = A.Compose([
+    A.RandomScale(scale_limit = [-0.95,0], p = 0.95),
+    A.RandomShadow(shadow_roi=(0.25, 0.25, 0.75, 0.75)),
+    A.PadIfNeeded(min_width = resize_width, min_height = resize_height,
+                  border_mode = cv2.BORDER_CONSTANT)
+    ])
 
 class ICDARSegmentation(Dataset):
     """
@@ -77,8 +84,13 @@ class ICDARSegmentation(Dataset):
 
     def __getitem__(self, index):
         _img, _target = self._make_img_gt_point_pair(index)
+
+        _img = np.array(_img)
+        _target = np.array(_target)
+
+        transformed = aug_transform(image=_img, mask=_target)
         
-        sample = {'image': _img, 'label': _target}
+        sample = {'image': transformed["image"], 'label': transformed["mask"]}
 
         for split in self.split:
             if split == "train":
